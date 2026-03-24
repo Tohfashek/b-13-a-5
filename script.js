@@ -1,25 +1,24 @@
-// ১. স্যাম্পল ডেটা
+// ১. ডাটা জেনারেশন (ঠিক ৫০টি কার্ড)
 const baseIssues = [
-    { title: "Fix Navigation Menu On Mobile Devices", description: "The navigation menu doesn't collapse properly on small screen resolutions.", status: "Open", author: "john.doe", priority: "HIGH", label: "UI/UX", createdAt: "1/15/2026" },
-    { title: "Dashboard Loading Performance", description: "Main dashboard data takes too long to fetch from the server.", status: "Closed", author: "rahul.dev", priority: "MEDIUM", label: "Performance", createdAt: "1/12/2026" },
-    { title: "JWT Auth Token Validation", description: "Tokens are expiring randomly before the set limit in production.", status: "Open", author: "sara.smith", priority: "HIGH", label: "Security", createdAt: "1/18/2026" },
-    { title: "PDF Report Generation Error", description: "Exporting large reports to PDF format leads to timeout errors.", status: "Closed", author: "linda.k", priority: "HIGH", label: "Bug", createdAt: "1/10/2026" }
+    { title: "Fix Navigation Menu On Mobile Devices", description: "The navigation menu doesn't collapse properly on mobile devices. Needs urgent attention.", status: "Open", author: "john.doe", priority: "HIGH", label: "BUG", createdAt: "1/15/2026" },
+    { title: "Dashboard Loading Slow", description: "Main dashboard charts take too long to load on production environment.", status: "Closed", author: "rahul.dev", priority: "MEDIUM", label: "PERFORMANCE", createdAt: "1/12/2026" },
+    { title: "Authentication Fix", description: "Users are unable to reset passwords due to SMTP configuration issues.", status: "Open", author: "sara.smith", priority: "HIGH", label: "SECURITY", createdAt: "2/10/2026" }
 ];
 
-// ২. লুপ দিয়ে ৪৮টি কার্ড তৈরি
 const issues = [];
-for (let i = 0; i < 48; i++) {
+for (let i = 0; i < 50; i++) {
     const item = baseIssues[i % baseIssues.length];
     issues.push({
         ...item,
         title: `${item.title} #${i + 1}`,
-        status: i % 3 === 0 ? "Closed" : "Open"
+        status: i % 3 === 0 ? "Closed" : "Open", // ছবি অনুযায়ী মিক্সড স্ট্যাটাস
+        priority: i % 2 === 0 ? "HIGH" : "MEDIUM"
     });
 }
 
 let filteredData = [...issues];
 
-// ৩. লগইন ফাংশন
+// ২. লগইন ফাংশন
 function handleLogin() {
     const user = document.getElementById('username').value;
     const pass = document.getElementById('password').value;
@@ -32,7 +31,7 @@ function handleLogin() {
     }
 }
 
-// ৪. ডিসপ্লে ফাংশন (৪ কলাম লেআউট)
+// ৩. কার্ড রেন্ডারিং (সব রিকোয়ারমেন্টসহ)
 function displayIssues(data) {
     const container = document.getElementById('issue-container');
     const countDisplay = document.getElementById('issue-count');
@@ -41,39 +40,57 @@ function displayIssues(data) {
 
     data.forEach((item) => {
         const borderColor = item.status === 'Open' ? 'border-t-[#22C55E]' : 'border-t-[#A855F7]';
+        const iconColor = item.status === 'Open' ? 'text-green-500' : 'text-purple-500';
+        
         const card = document.createElement('div');
-        card.className = `bg-white p-6 rounded-xl shadow-sm border-t-[6px] ${borderColor} cursor-pointer hover:shadow-md transition-all flex flex-col justify-between h-full`;
+        card.className = `bg-white p-5 rounded-xl shadow-sm border-t-[5px] ${borderColor} cursor-pointer hover:shadow-lg transition-all flex flex-col justify-between h-full`;
         card.onclick = () => showModal(item);
         
         card.innerHTML = `
             <div>
-                <div class="flex justify-between items-center mb-4 text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                    <span>${item.label}</span>
-                    <span class="bg-gray-100 px-2 py-0.5 rounded text-gray-600">${item.priority}</span>
-                </div>
-                <h3 class="font-bold text-slate-800 mb-2 leading-tight">${item.title}</h3>
-                <p class="text-xs text-slate-500 line-clamp-3 mb-4">${item.description}</p>
-            </div>
-            <div class="pt-4 border-t flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <div class="w-6 h-6 rounded bg-slate-800 text-white text-[10px] flex items-center justify-center font-bold">
-                        ${item.author[0].toUpperCase()}
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex items-center gap-1.5">
+                         <span class="w-4 h-4 rounded-full border-2 border-current ${iconColor} flex items-center justify-center text-[8px]">●</span>
+                         <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-tighter">${item.label}</span>
                     </div>
-                    <span class="text-[11px] font-bold text-slate-600">@${item.author}</span>
+                    <span class="text-[10px] font-extrabold text-orange-400 uppercase">${item.priority}</span>
                 </div>
-                <span class="text-[10px] font-bold text-gray-400">${item.createdAt}</span>
+                
+                <h3 class="font-bold text-slate-800 text-[13.5px] mb-2 leading-tight">${item.title}</h3>
+                <p class="text-[11px] text-slate-400 mb-4 line-clamp-2">${item.description}</p>
+                
+                <div class="flex gap-2 mb-4">
+                    <span class="px-2 py-0.5 rounded-full bg-orange-50 text-orange-500 text-[9px] font-black italic border border-orange-100 uppercase"># BUG</span>
+                    <span class="px-2 py-0.5 rounded-full bg-orange-50 text-orange-500 text-[9px] font-black italic border border-orange-100 uppercase"># HELP WANTED</span>
+                </div>
+            </div>
+
+            <div class="pt-3 border-t border-gray-50 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-6 h-6 rounded bg-slate-800 flex items-center justify-center text-[10px] font-bold text-white uppercase">${item.author[0]}</div>
+                    <span class="text-[10px] font-bold text-slate-700">by ${item.author}</span>
+                </div>
+                <span class="text-[9px] font-bold text-slate-400">${item.createdAt}</span>
             </div>
         `;
         container.appendChild(card);
     });
 }
 
-// ফিল্টার ও সার্চ আগের মতোই থাকবে...
+// ৪. ফিল্টার ও সার্চ
 function filterData(status, element) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab-active'));
     element.classList.add('tab-active');
-    filteredData = status === 'All' ? issues : issues.filter(i => i.status === status);
-    displayIssues(filteredData);
+    
+    document.getElementById('loading').classList.remove('hidden');
+    document.getElementById('issue-container').classList.add('hidden');
+
+    setTimeout(() => {
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('issue-container').classList.remove('hidden');
+        filteredData = status === 'All' ? issues : issues.filter(i => i.status === status);
+        displayIssues(filteredData);
+    }, 300);
 }
 
 function handleSearch() {
@@ -83,6 +100,16 @@ function handleSearch() {
 
 function showModal(item) {
     const content = document.getElementById('modal-content');
-    content.innerHTML = `<h2 class="text-2xl font-bold mb-4">${item.title}</h2><p class="text-gray-600">${item.description}</p>`;
+    content.innerHTML = `
+        <span class="text-[10px] font-black text-blue-500 uppercase mb-2 block">${item.label}</span>
+        <h2 class="text-2xl font-extrabold text-slate-800 mb-4">${item.title}</h2>
+        <p class="text-slate-600 text-sm mb-6 border-l-4 border-slate-200 pl-4 italic leading-relaxed">${item.description}</p>
+        <div class="grid grid-cols-2 gap-4 text-[11px] bg-slate-50 p-5 rounded-xl font-bold uppercase text-slate-500">
+            <p>Author: <span class="text-slate-800">@${item.author}</span></p>
+            <p>Status: <span class="text-slate-800">${item.status}</span></p>
+            <p>Priority: <span class="text-slate-800">${item.priority}</span></p>
+            <p>Date: <span class="text-slate-800">${item.createdAt}</span></p>
+        </div>
+    `;
     issue_modal.showModal();
 }
