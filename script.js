@@ -1,4 +1,4 @@
-// ১. ডাটা জেনারেশন (ঠিক ৫০টি কার্ড)
+// 1. data genarat
 const baseIssues = [
     { title: "Fix Navigation Menu On Mobile Devices", description: "The navigation menu doesn't collapse properly on mobile devices. Needs urgent attention.", status: "Open", author: "john.doe", priority: "HIGH", label: "BUG", createdAt: "1/15/2026" },
     { title: "Dashboard Loading Slow", description: "Main dashboard charts take too long to load on production environment.", status: "Closed", author: "rahul.dev", priority: "MEDIUM", label: "PERFORMANCE", createdAt: "1/12/2026" },
