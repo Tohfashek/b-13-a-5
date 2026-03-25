@@ -24,9 +24,7 @@
   4️⃣ What is an arrow function?
   
   Ans:Arrow function is a function which is to write down short way for funtion.funtion's symbole is (=>)its use for clear code.
-  
+
   5️⃣ What are template literals?
----
 
-
-git push origin main
+Ans:Template literals is advanced way to writing string.we use it usually instead quotation mark,it uses backtics.its have a extra benefite like as we use easily insert variable value using ${} and write multi line text without any hassle.
