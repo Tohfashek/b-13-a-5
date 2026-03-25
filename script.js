@@ -1,4 +1,4 @@
-// 1. data genarat
+// 1. data genarate
 const baseIssues = [
     { title: "Fix Navigation Menu On Mobile Devices", description: "The navigation menu doesn't collapse properly on mobile devices. Needs urgent attention.", status: "Open", author: "john.doe", priority: "HIGH", label: "BUG", createdAt: "1/15/2026" },
     { title: "Dashboard Loading Slow", description: "Main dashboard charts take too long to load on production environment.", status: "Closed", author: "rahul.dev", priority: "MEDIUM", label: "PERFORMANCE", createdAt: "1/12/2026" },
@@ -11,14 +11,14 @@ for (let i = 0; i < 50; i++) {
     issues.push({
         ...item,
         title: `${item.title} #${i + 1}`,
-        status: i % 3 === 0 ? "Closed" : "Open", // ছবি অনুযায়ী মিক্সড স্ট্যাটাস
+        status: i % 3 === 0 ? "Closed" : "Open", 
         priority: i % 2 === 0 ? "HIGH" : "MEDIUM"
     });
 }
 
 let filteredData = [...issues];
 
-// ২. লগইন ফাংশন
+// 2. login 
 function handleLogin() {
     const user = document.getElementById('username').value;
     const pass = document.getElementById('password').value;
@@ -26,12 +26,13 @@ function handleLogin() {
         document.getElementById('login-page').classList.add('hidden');
         document.getElementById('main-page').classList.remove('hidden');
         displayIssues(issues);
-    } else {
-        alert("ভুল ইউজারনেম বা পাসওয়ার্ড!");
+    } 
+    else {
+        alert;
     }
 }
 
-// ৩. কার্ড রেন্ডারিং (সব রিকোয়ারমেন্টসহ)
+// 3. looping cards
 function displayIssues(data) {
     const container = document.getElementById('issue-container');
     const countDisplay = document.getElementById('issue-count');
@@ -77,7 +78,7 @@ function displayIssues(data) {
     });
 }
 
-// ৪. ফিল্টার ও সার্চ
+// 4. search icon
 function filterData(status, element) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab-active'));
     element.classList.add('tab-active');
